@@ -33,7 +33,7 @@ jobs:
       - name: Run Backend, run tests and stop backend
         run: |
           # 1) Run backend in background
-          nohup npx nx serve knowlexus-api &
+          nohup npx nx serve knowlexus-api --port=3000 &
 
           # 2) Store process ID
           SERVER_PID=$!
