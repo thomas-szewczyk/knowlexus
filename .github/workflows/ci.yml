@@ -26,9 +26,16 @@ jobs:
       - run: npx playwright install --with-deps
       - uses: nrwl/nx-set-shas@v4
 
-      # Lint, Tests and E2E
-      - run: npx nx affected -t lint test e2e
-
       # Build backend and frontend
       - run: nx build knowlexus-api
       - run: nx build knowlexus
+
+      - name: Run backend
+        run: |
+            # Run API in the background
+            nohup nx serve portal-backend &
+            # Wait until API is reachable
+            npx wait-on http://localhost:3000
+
+      - name: Affected Tests, Lint and E2E execution
+        run: npx nx affected -t lint test e2e
