@@ -27,8 +27,8 @@ jobs:
       - uses: nrwl/nx-set-shas@v4
 
       # Build backend and frontend
-      - run: nx build knowlexus-api
-      - run: nx build knowlexus
+      - run: npx nx build knowlexus-api
+      - run: npx nx build knowlexus
 
       - name: Run backend
         run: |
