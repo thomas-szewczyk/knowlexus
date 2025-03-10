@@ -30,12 +30,19 @@ jobs:
       - run: npx nx build knowlexus-api
       - run: npx nx build knowlexus
 
-      - name: Run backend
+      - name: Run Backend, run tests and stop backend
         run: |
-            # Run API in the background
-            nohup npx nx serve knowlexus-api &
-            # Wait until API is reachable
-            npx wait-on http://localhost:3000
+          # 1) Run backend in background
+          nohup npx nx serve knowlexus-api &
 
-      - name: Affected Tests, Lint and E2E execution
-        run: npx nx affected -t lint test e2e
+          # 2) Store process ID
+          SERVER_PID=$!
+
+          # 3) Wait until server is reachable
+          npx wait-on http://localhost:3000
+
+          # 4) Linting / Tests / E2E
+          npx nx affected -t lint test e2e
+
+          # 5) kill backend
+          kill $SERVER_PID
