@@ -33,7 +33,7 @@ jobs:
       - name: Run backend
         run: |
             # Run API in the background
-            nohup npx nx serve portal-backend &
+            nohup npx nx serve knowlexus-api &
             # Wait until API is reachable
             npx wait-on http://localhost:3000
 
